@@ -1,48 +1,81 @@
 @model IEnumerable<SistemaCursos.Models.InscripcionModel>
 
 @{
-    ViewData["Title"] = "Inscripciones";
+    ViewData["Title"] = "Lista de Inscripciones";
 }
 
-<h1>Lista de Inscripciones</h1>
+<h1 class="display-5 mt-4 mb-3" style="font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, Roboto, sans-serif; color: #2b303a; font-weight: 300; letter-spacing: -0.5px;">
+    Listado de Inscripciones
+</h1>
 
-<p>
-    <a asp-action="Create" class="btn btn-primary mb-3">Crear Nueva</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Curso)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Estudiante)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.fecha_inscripcion)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model)
-        {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Curso.nombre)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Estudiante.nombre) @Html.DisplayFor(modelItem => item.Estudiante.apellido)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.fecha_inscripcion)
-                </td>
-                <td>
-                    <a asp-action="Edit" asp-route-id="@item.inscripcion_id">Editar</a> |
-                    <a asp-action="Details" asp-route-id="@item.inscripcion_id">Detalles</a> |
-                    <a asp-action="Delete" asp-route-id="@item.inscripcion_id">Eliminar</a>
-                </td>
+<div class="mb-4" style="margin-top: 20px;">
+    <a asp-action="Create" class="btn btn-sm" style="background-color: #e6f6f5; color: #51b5ae; font-weight: 600; border: 1px solid #bce5e2; border-radius: 6px; padding: 8px 20px; box-shadow: 0 2px 4px rgba(81, 181, 174, 0.05); transition: all 0.2s ease;">
+        Nueva Inscripción
+    </a>
+</div>
+
+<div class="table-responsive">
+    <table class="table" style="border-collapse: collapse; width: 100%; background-color: transparent;">
+        <thead>
+            <tr style="border-bottom: 2px solid #51b5ae; color: #495057; font-family: 'Segoe UI', sans-serif;">
+                <th style="padding: 12px 8px; font-weight: 600;">ID</th>
+                <th style="padding: 12px 8px; font-weight: 600;">Curso</th>
+                <th style="padding: 12px 8px; font-weight: 600;">Estudiante</th>
+                <th style="padding: 12px 8px; font-weight: 600;">Fecha de Inscripción</th>
+                <th style="padding: 12px 8px; font-weight: 600;">Acciones</th>
             </tr>
-        }
-    </tbody>
-</table>
+        </thead>
+
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr style="border-bottom: 1px solid #dee2e6; vertical-align: middle; color: #333; font-family: 'Segoe UI', sans-serif;">
+
+                    <td style="padding: 14px 8px; font-weight: bold; color: #212529;">
+                        @item.inscripcion_id
+                    </td>
+
+                    <td style="padding: 14px 8px;">
+                        @item.Curso.nombre
+                    </td>
+
+                    <td style="padding: 14px 8px;">
+                        @item.Estudiante.nombre @item.Estudiante.apellido
+                    </td>
+
+                    <td style="padding: 14px 8px;">
+                        @item.fecha_inscripcion.ToShortDateString()
+                    </td>
+
+                    <td style="padding: 14px 8px;">
+                        <div class="d-flex gap-2 justify-content-center">
+
+                            <a asp-action="Edit"
+                               asp-route-id="@item.inscripcion_id"
+                               class="btn btn-sm"
+                               style="background-color: #fef5d1; color: #856404; font-weight: 500; border: 1px solid #ffeeba; border-radius: 4px; padding: 4px 10px;">
+                                Editar
+                            </a>
+
+                            <a asp-action="Details"
+                               asp-route-id="@item.inscripcion_id"
+                               class="btn btn-sm"
+                               style="background-color: #ffe8d6; color: #a75d00; font-weight: 500; border: 1px solid #ffdad6; border-radius: 4px; padding: 4px 10px;">
+                                Detalles
+                            </a>
+
+                            <a asp-action="Delete"
+                               asp-route-id="@item.inscripcion_id"
+                               class="btn btn-sm"
+                               style="background-color: #f8d7da; color: #721c24; font-weight: 500; border: 1px solid #f5c6cb; border-radius: 4px; padding: 4px 10px;">
+                                Eliminar
+                            </a>
+
+                        </div>
+                    </td>
+
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

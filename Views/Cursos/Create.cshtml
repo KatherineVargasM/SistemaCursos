@@ -1,48 +1,63 @@
 @model SistemaCursos.Models.CursoModel
 
 @{
-    ViewData["Title"] = "Create";
+    ViewData["Title"] = "Crear Curso";
 }
 
-<h1>Create</h1>
+<h1 class="display-5 mt-4 mb-3" style="font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, Roboto, sans-serif; color: #2b303a; font-weight: 300; letter-spacing: -0.5px;">
+    Nuevo Curso
+</h1>
 
-<h4>CursoModel</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
+<hr style="border-color: #51b5ae; opacity: 0.2;" />
+
+<div class="row mt-4" style="font-family: 'Segoe UI', sans-serif;">
+    <div class="col-md-6">
         <form asp-action="Create">
+
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
-            <div class="form-group">
-                <label asp-for="nombre" class="control-label"></label>
-                <input asp-for="nombre" class="form-control" />
+            <div class="form-group mb-3">
+                <label asp-for="nombre" class="control-label" style="font-weight: 500; color: #495057;"></label>
+                <input asp-for="nombre" class="form-control" style="border-radius: 6px; border: 1px solid #ced4da;" />
                 <span asp-validation-for="nombre" class="text-danger"></span>
             </div>
 
-            <div class="form-group">
-                <label asp-for="descripcion" class="control-label"></label>
-                <input asp-for="descripcion" class="form-control" />
+            <div class="form-group mb-3">
+                <label asp-for="descripcion" class="control-label" style="font-weight: 500; color: #495057;"></label>
+                <input asp-for="descripcion" class="form-control" style="border-radius: 6px; border: 1px solid #ced4da;" />
                 <span asp-validation-for="descripcion" class="text-danger"></span>
             </div>
 
-            <div class="form-group">
-                <label asp-for="fecha_inicio" class="control-label"></label>
-                <input asp-for="fecha_inicio" class="form-control" />
+            <div class="form-group mb-3">
+                <label asp-for="fecha_inicio" class="control-label" style="font-weight: 500; color: #495057;"></label>
+                <input asp-for="fecha_inicio" class="form-control" style="border-radius: 6px; border: 1px solid #ced4da;" />
                 <span asp-validation-for="fecha_inicio" class="text-danger"></span>
             </div>
 
-            <div class="form-group">
-                <label asp-for="fecha_fin" class="control-label"></label>
-                <input asp-for="fecha_fin" class="form-control" />
+            <div class="form-group mb-3">
+                <label asp-for="fecha_fin" class="control-label" style="font-weight: 500; color: #495057;"></label>
+                <input asp-for="fecha_fin" class="form-control" style="border-radius: 6px; border: 1px solid #ced4da;" />
                 <span asp-validation-for="fecha_fin" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
+
+            <div class="form-group mt-4 mb-5">
+                <input type="submit" value="Guardar Curso"
+                       class="btn text-white"
+                       style="background-color: #51b5ae; font-weight: 500; padding: 8px 24px; border-radius: 6px; border: none; margin-right: 8px;" />
+
+                <a asp-action="Index"
+                   class="btn"
+                   style="background-color: #e9ecef; color: #495057; font-weight: 500; padding: 8px 24px; border-radius: 6px; border: 1px solid #dee2e6;">
+                    Regresar
+                </a>
             </div>
+
         </form>
     </div>
 </div>
 
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

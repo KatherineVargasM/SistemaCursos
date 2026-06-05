@@ -4,45 +4,72 @@
     ViewData["Title"] = "Crear Inscripción";
 }
 
-<h1>Crear Nueva Inscripción</h1>
+<h1 class="display-5 mt-4 mb-3"
+    style="font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, Roboto, sans-serif; color: #2b303a; font-weight: 300; letter-spacing: -0.5px;">
+    Nueva Inscripción
+</h1>
 
-<hr />
-<div class="row">
-    <div class="col-md-4">
+<hr style="border-color: #51b5ae; opacity: 0.2;" />
+
+<div class="row mt-4" style="font-family: 'Segoe UI', sans-serif;">
+    <div class="col-md-6">
+
         <form asp-action="Create">
+
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
             <div class="form-group mb-3">
-                <label asp-for="curso_id" class="control-label"></label>
-                <select asp-for="curso_id" class="form-control" asp-items="ViewBag.curso_id">
+                <label asp-for="curso_id" class="control-label" style="font-weight: 500; color: #495057;"></label>
+
+                <select asp-for="curso_id"
+                        class="form-control"
+                        asp-items="ViewBag.curso_id"
+                        style="border-radius: 6px; border: 1px solid #ced4da;">
                     <option value="">-- Seleccione un Curso --</option>
                 </select>
+
                 <span asp-validation-for="curso_id" class="text-danger"></span>
             </div>
 
             <div class="form-group mb-3">
-                <label asp-for="estudiante_id" class="control-label"></label>
-                <select asp-for="estudiante_id" class="form-control" asp-items="ViewBag.estudiante_id">
+                <label asp-for="estudiante_id" class="control-label" style="font-weight: 500; color: #495057;"></label>
+
+                <select asp-for="estudiante_id"
+                        class="form-control"
+                        asp-items="ViewBag.estudiante_id"
+                        style="border-radius: 6px; border: 1px solid #ced4da;">
                     <option value="">-- Seleccione un Estudiante --</option>
                 </select>
+
                 <span asp-validation-for="estudiante_id" class="text-danger"></span>
             </div>
 
             <div class="form-group mb-3">
-                <label asp-for="fecha_inscripcion" class="control-label"></label>
-                <input asp-for="fecha_inscripcion" class="form-control" />
+                <label asp-for="fecha_inscripcion" class="control-label" style="font-weight: 500; color: #495057;"></label>
+
+                <input asp-for="fecha_inscripcion"
+                       class="form-control"
+                       style="border-radius: 6px; border: 1px solid #ced4da;" />
+
                 <span asp-validation-for="fecha_inscripcion" class="text-danger"></span>
             </div>
 
-            <div class="form-group mt-4">
-                <input type="submit" value="Guardar Inscripción" class="btn btn-primary" />
-            </div>
-        </form>
-    </div>
-</div>
+            <div class="form-group mt-4 mb-5">
+                <input type="submit"
+                       value="Guardar Inscripción"
+                       class="btn text-white"
+                       style="background-color: #51b5ae; font-weight: 500; padding: 8px 24px; border-radius: 6px; border: none; margin-right: 8px;" />
 
-<div class="mt-3">
-    <a asp-action="Index">Volver a la lista</a>
+                <a asp-action="Index"
+                   class="btn"
+                   style="background-color: #e9ecef; color: #495057; font-weight: 500; padding: 8px 24px; border-radius: 6px; border: 1px solid #dee2e6;">
+                    Regresar
+                </a>
+            </div>
+
+        </form>
+
+    </div>
 </div>
 
 @section Scripts {

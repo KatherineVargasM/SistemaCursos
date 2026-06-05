@@ -1,46 +1,78 @@
 @model SistemaCursos.Models.EstudianteModel
 
 @{
-    ViewData["Title"] = "Details";
+    ViewData["Title"] = "Detalles del Estudiante";
 }
 
-<h1>Details</h1>
+<h1 class="display-5 mt-4 mb-3"
+    style="font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, Roboto, sans-serif; color: #2b303a; font-weight: 300; letter-spacing: -0.5px;">
+    Detalles del Estudiante
+</h1>
 
-<div>
-    <h4>EstudianteModel</h4>
-    <hr />
-    <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.nombre)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.nombre)
-        </dd>
-    </dl>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.apellido)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.apellido)
-        </dd>
-    </dl>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.email)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.email)
-        </dd>
-    </dl>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.fecha_nacimiento)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.fecha_nacimiento)
-        </dd>
-    </dl>
+<hr style="border-color: #51b5ae; opacity: 0.2;" />
+
+<div class="mt-4" style="font-family: 'Segoe UI', sans-serif; max-width: 700px;">
+
+    <div class="row py-2" style="border-bottom: 1px solid #dee2e6;">
+        <div class="col-sm-4" style="font-weight: 600; color: #495057;">
+            ID
+        </div>
+        <div class="col-sm-8" style="font-weight: bold; color: #212529;">
+            @Model.estudiante_id
+        </div>
+    </div>
+
+    <div class="row py-2" style="border-bottom: 1px solid #dee2e6;">
+        <div class="col-sm-4" style="font-weight: 600; color: #495057;">
+            Nombre
+        </div>
+        <div class="col-sm-8">
+            @Model.nombre
+        </div>
+    </div>
+
+    <div class="row py-2" style="border-bottom: 1px solid #dee2e6;">
+        <div class="col-sm-4" style="font-weight: 600; color: #495057;">
+            Apellido
+        </div>
+        <div class="col-sm-8">
+            @Model.apellido
+        </div>
+    </div>
+
+    <div class="row py-2" style="border-bottom: 1px solid #dee2e6;">
+        <div class="col-sm-4" style="font-weight: 600; color: #495057;">
+            Correo Electrónico
+        </div>
+        <div class="col-sm-8">
+            @Model.email
+        </div>
+    </div>
+
+    <div class="row py-2" style="border-bottom: 1px solid #dee2e6;">
+        <div class="col-sm-4" style="font-weight: 600; color: #495057;">
+            Fecha de Nacimiento
+        </div>
+        <div class="col-sm-8">
+            @Model.fecha_nacimiento.ToShortDateString()
+        </div>
+    </div>
 
 </div>
-<div>
-    <a asp-action="Edit" asp-route-id="@Model?.estudiante_id">Edit</a> |
-    <a asp-action="Index">Back to List</a>
+
+<div class="mt-4 mb-5" style="font-family: 'Segoe UI', sans-serif;">
+
+    <a asp-action="Edit"
+       asp-route-id="@Model.estudiante_id"
+       class="btn"
+       style="background-color: #ffe8d6; color: #a75d00; font-weight: 500; border: 1px solid #ffdad6; border-radius: 6px; padding: 8px 24px; margin-right: 8px;">
+        Editar
+    </a>
+
+    <a asp-action="Index"
+       class="btn"
+       style="background-color: #e9ecef; color: #495057; font-weight: 500; padding: 8px 24px; border-radius: 6px; border: 1px solid #dee2e6;">
+        Regresar
+    </a>
+
 </div>
