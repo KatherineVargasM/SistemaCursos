@@ -1,52 +1,36 @@
 @model SistemaCursos.Models.InscripcionModel
 
 @{
-    ViewData["Title"] = "Details";
+    ViewData["Title"] = "Detalles de Inscripción";
 }
 
-<h1>Details</h1>
+<h1>Detalles</h1>
 
 <div>
-    <h4>InscripcionModel</h4>
+    <h4>Inscripción</h4>
     <hr />
     <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.curso_id)
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Curso)
         </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.curso_id)
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Curso.nombre)
         </dd>
-    </dl>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.estudiante_id)
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Estudiante)
         </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.estudiante_id)
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Estudiante.nombre) @Html.DisplayFor(model => model.Estudiante.apellido)
         </dd>
-    </dl>
-        <dt class = "col-sm-2">
+        <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.fecha_inscripcion)
         </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-10">
             @Html.DisplayFor(model => model.fecha_inscripcion)
         </dd>
     </dl>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Curso)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Curso)
-        </dd>
-    </dl>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Estudiante)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Estudiante)
-        </dd>
-    </dl>
 </div>
-<div>
-    <a asp-action="Edit" asp-route-id="@Model?.inscripcion_id">Edit</a> |
-    <a asp-action="Index">Back to List</a>
+<div class="mt-3">
+    <a asp-action="Edit" asp-route-id="@Model?.inscripcion_id" class="btn btn-primary">Editar</a> |
+    <a asp-action="Index">Volver a la lista</a>
 </div>

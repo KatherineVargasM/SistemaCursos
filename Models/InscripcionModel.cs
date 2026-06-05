@@ -27,9 +27,9 @@ namespace SistemaCursos.Models
         public DateTime fecha_inscripcion { get; set; } = DateTime.Now;
 
         [ForeignKey("curso_id")]
-        public CursoModel Curso { get; set; } = null!;
+        public CursoModel? Curso { get; set; }
 
         [ForeignKey("estudiante_id")]
-        public EstudianteModel Estudiante { get; set; } = null!;
+        public EstudianteModel? Estudiante { get; set; }
     }
 }

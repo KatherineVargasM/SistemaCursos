@@ -1,150 +1,155 @@
-
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using SistemaCursos.Models;
 using SistemaCursos.Data;
 
-public class InscripcionesController : Controller
+namespace SistemaCursos.Controllers
 {
-    private readonly ApplicationDbContext _context;
-
-    public InscripcionesController(ApplicationDbContext context)
+    public class InscripcionesController : Controller
     {
-        _context = context;
-    }
+        private readonly ApplicationDbContext _context;
 
-    // GET: INSCRIPCIONMODELS
-    public async Task<IActionResult> Index()    
-    {
-        return View(await _context.Inscripciones.ToListAsync());
-    }
-
-    // GET: INSCRIPCIONMODELS/Details/5
-    public async Task<IActionResult> Details(int? inscripcion_id)
-    {
-        if (inscripcion_id == null)
+        public InscripcionesController(ApplicationDbContext context)
         {
-            return NotFound();
+            _context = context;
         }
 
-        var inscripcionmodel = await _context.Inscripciones
-            .FirstOrDefaultAsync(m => m.inscripcion_id == inscripcion_id);
-        if (inscripcionmodel == null)
+        public async Task<IActionResult> Index()
         {
-            return NotFound();
+            var applicationDbContext = _context.Inscripciones.Include(i => i.Curso).Include(i => i.Estudiante);
+            return View(await applicationDbContext.ToListAsync());
         }
 
-        return View(inscripcionmodel);
-    }
-
-    // GET: INSCRIPCIONMODELS/Create
-    public IActionResult Create()
-    {
-        return View();
-    }
-
-    // POST: INSCRIPCIONMODELS/Create
-    // To protect from overposting attacks, enable the specific properties you want to bind to.
-    // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-    [HttpPost]
-    [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Create([Bind("inscripcion_id,curso_id,estudiante_id,fecha_inscripcion,Curso,Estudiante")] InscripcionModel inscripcionmodel)
-    {
-        if (ModelState.IsValid)
+        public async Task<IActionResult> Details(int? id)
         {
-            _context.Add(inscripcionmodel);
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var inscripcionModel = await _context.Inscripciones
+                .Include(i => i.Curso)
+                .Include(i => i.Estudiante)
+                .FirstOrDefaultAsync(m => m.inscripcion_id == id);
+
+            if (inscripcionModel == null)
+            {
+                return NotFound();
+            }
+
+            return View(inscripcionModel);
+        }
+
+        public IActionResult Create()
+        {
+            ViewData["curso_id"] = new SelectList(_context.Cursos, "curso_id", "nombre");
+            ViewData["estudiante_id"] = new SelectList(_context.Estudiantes, "estudiante_id", "nombre");
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Create([Bind("inscripcion_id,curso_id,estudiante_id,fecha_inscripcion")] InscripcionModel inscripcionModel)
+        {
+            if (ModelState.IsValid)
+            {
+                _context.Add(inscripcionModel);
+                await _context.SaveChangesAsync();
+                return RedirectToAction(nameof(Index));
+            }
+            ViewData["curso_id"] = new SelectList(_context.Cursos, "curso_id", "nombre", inscripcionModel.curso_id);
+            ViewData["estudiante_id"] = new SelectList(_context.Estudiantes, "estudiante_id", "nombre", inscripcionModel.estudiante_id);
+            return View(inscripcionModel);
+        }
+
+        public async Task<IActionResult> Edit(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var inscripcionModel = await _context.Inscripciones.FindAsync(id);
+            if (inscripcionModel == null)
+            {
+                return NotFound();
+            }
+            ViewData["curso_id"] = new SelectList(_context.Cursos, "curso_id", "nombre", inscripcionModel.curso_id);
+            ViewData["estudiante_id"] = new SelectList(_context.Estudiantes, "estudiante_id", "nombre", inscripcionModel.estudiante_id);
+            return View(inscripcionModel);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Edit(int id, [Bind("inscripcion_id,curso_id,estudiante_id,fecha_inscripcion")] InscripcionModel inscripcionModel)
+        {
+            if (id != inscripcionModel.inscripcion_id)
+            {
+                return NotFound();
+            }
+
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    _context.Update(inscripcionModel);
+                    await _context.SaveChangesAsync();
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+                    if (!InscripcionModelExists(inscripcionModel.inscripcion_id))
+                    {
+                        return NotFound();
+                    }
+                    else
+                    {
+                        throw;
+                    }
+                }
+                return RedirectToAction(nameof(Index));
+            }
+            ViewData["curso_id"] = new SelectList(_context.Cursos, "curso_id", "nombre", inscripcionModel.curso_id);
+            ViewData["estudiante_id"] = new SelectList(_context.Estudiantes, "estudiante_id", "nombre", inscripcionModel.estudiante_id);
+            return View(inscripcionModel);
+        }
+
+        public async Task<IActionResult> Delete(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var inscripcionModel = await _context.Inscripciones
+                .Include(i => i.Curso)
+                .Include(i => i.Estudiante)
+                .FirstOrDefaultAsync(m => m.inscripcion_id == id);
+            if (inscripcionModel == null)
+            {
+                return NotFound();
+            }
+
+            return View(inscripcionModel);
+        }
+
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> DeleteConfirmed(int id)
+        {
+            var inscripcionModel = await _context.Inscripciones.FindAsync(id);
+            if (inscripcionModel != null)
+            {
+                _context.Inscripciones.Remove(inscripcionModel);
+            }
+
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
-        return View(inscripcionmodel);
-    }
 
-    // GET: INSCRIPCIONMODELS/Edit/5
-    public async Task<IActionResult> Edit(int? inscripcion_id)
-    {
-        if (inscripcion_id == null)
+        private bool InscripcionModelExists(int id)
         {
-            return NotFound();
+            return _context.Inscripciones.Any(e => e.inscripcion_id == id);
         }
-
-        var inscripcionmodel = await _context.Inscripciones.FindAsync(inscripcion_id);
-        if (inscripcionmodel == null)
-        {
-            return NotFound();
-        }
-        return View(inscripcionmodel);
-    }
-
-    // POST: INSCRIPCIONMODELS/Edit/5
-    // To protect from overposting attacks, enable the specific properties you want to bind to.
-    // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-    [HttpPost]
-    [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Edit(int? inscripcion_id, [Bind("inscripcion_id,curso_id,estudiante_id,fecha_inscripcion,Curso,Estudiante")] InscripcionModel inscripcionmodel)
-    {
-        if (inscripcion_id != inscripcionmodel.inscripcion_id)
-        {
-            return NotFound();
-        }
-
-        if (ModelState.IsValid)
-        {
-            try
-            {
-                _context.Update(inscripcionmodel);
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!InscripcionModelExists(inscripcionmodel.inscripcion_id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-            return RedirectToAction(nameof(Index));
-        }
-        return View(inscripcionmodel);
-    }
-
-    // GET: INSCRIPCIONMODELS/Delete/5
-    public async Task<IActionResult> Delete(int? inscripcion_id)
-    {
-        if (inscripcion_id == null)
-        {
-            return NotFound();
-        }
-
-        var inscripcionmodel = await _context.Inscripciones
-            .FirstOrDefaultAsync(m => m.inscripcion_id == inscripcion_id);
-        if (inscripcionmodel == null)
-        {
-            return NotFound();
-        }
-
-        return View(inscripcionmodel);
-    }
-
-    // POST: INSCRIPCIONMODELS/Delete/5
-    [HttpPost, ActionName("Delete")]
-    [ValidateAntiForgeryToken]
-    public async Task<IActionResult> DeleteConfirmed(int? inscripcion_id)
-    {
-        var inscripcionmodel = await _context.Inscripciones.FindAsync(inscripcion_id);
-        if (inscripcionmodel != null)
-        {
-            _context.Inscripciones.Remove(inscripcionmodel);
-        }
-
-        await _context.SaveChangesAsync();
-        return RedirectToAction(nameof(Index));
-    }
-
-    private bool InscripcionModelExists(int? inscripcion_id)
-    {
-        return _context.Inscripciones.Any(e => e.inscripcion_id == inscripcion_id);
     }
 }

@@ -1,59 +1,48 @@
 @model IEnumerable<SistemaCursos.Models.InscripcionModel>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Inscripciones";
 }
 
-<h1>Index</h1>
+<h1>Lista de Inscripciones</h1>
 
 <p>
-    <a asp-action="Create">Create New</a>
+    <a asp-action="Create" class="btn btn-primary mb-3">Crear Nueva</a>
 </p>
 <table class="table">
     <thead>
         <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.curso_id)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.estudiante_id)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.fecha_inscripcion)
-            </th>
             <th>
                 @Html.DisplayNameFor(model => model.Curso)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Estudiante)
             </th>
+            <th>
+                @Html.DisplayNameFor(model => model.fecha_inscripcion)
+            </th>
             <th></th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(model => item.curso_id)
-            </td>
-            <td>
-                @Html.DisplayFor(model => item.estudiante_id)
-            </td>
-            <td>
-                @Html.DisplayFor(model => item.fecha_inscripcion)
-            </td>
-            <td>
-                @Html.DisplayFor(model => item.Curso)
-            </td>
-            <td>
-                @Html.DisplayFor(model => item.Estudiante)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.inscripcion_id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.inscripcion_id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.inscripcion_id">Delete</a>
-            </td>
-        </tr>
-}
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Curso.nombre)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Estudiante.nombre) @Html.DisplayFor(modelItem => item.Estudiante.apellido)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.fecha_inscripcion)
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.inscripcion_id">Editar</a> |
+                    <a asp-action="Details" asp-route-id="@item.inscripcion_id">Detalles</a> |
+                    <a asp-action="Delete" asp-route-id="@item.inscripcion_id">Eliminar</a>
+                </td>
+            </tr>
+        }
     </tbody>
 </table>

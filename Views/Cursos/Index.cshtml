@@ -24,9 +24,7 @@
             <th>
                 @Html.DisplayNameFor(model => model.fecha_fin)
             </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Inscripciones)
-            </th>
+
             <th></th>
         </tr>
     </thead>
@@ -45,9 +43,7 @@
             <td>
                 @Html.DisplayFor(model => item.fecha_fin)
             </td>
-            <td>
-                @Html.DisplayFor(model => item.Inscripciones)
-            </td>
+
             <td>
                 <a asp-action="Edit" asp-route-id="@item.curso_id">Edit</a> |
                 <a asp-action="Details" asp-route-id="@item.curso_id">Details</a> |
